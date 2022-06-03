@@ -56,6 +56,7 @@ public class Cliente {
 				case 4:
 					System.out.print("Digite o id do produto: ");
 					id = Tool.convertStringToInt(input).toString();
+
 					System.out.println(Produto.buscarProduto(id, token));
 					break;
 
@@ -65,14 +66,43 @@ public class Cliente {
 					System.out.print("Digite a quantidade do produto: ");
 					quantidade = input.nextLine();
 					System.out.print("Digite o valor do produto: ");
-					valor = Tool.convertStringToDouble(input).toString();	
+					valor = Tool.convertStringToDouble(input).toString();
 
+					System.out.println(Produto.salvarProduto(nome, quantidade, valor, token));
 					break;
+
+				case 6:
+					System.out.print("Digite o id do produto: ");
+					id = Tool.convertStringToInt(input).toString();
+					System.out.print("Digite o nome do produto: ");
+					nome = input.nextLine();
+					System.out.print("Digite a quantidade do produto: ");
+					quantidade = input.nextLine();
+					System.out.print("Digite o valor do produto: ");
+					valor = Tool.convertStringToDouble(input).toString();
+
+					System.out.println(Produto.alterarProduto(id, nome, quantidade, valor, token));
+					break;
+
+				case 7:
+					System.out.print("Digite o id do produto: ");
+					id = Tool.convertStringToInt(input).toString();
+
+					System.out.println(Produto.deletarProduto(id, token));
+					break;
+				
+				case 8:
+					endOfProgram = false;
+					break;
+
 				default:
+					System.out.println("voce náo digitou uma opcao valida! tente novamente!!");
 					break;
 			}
 		}while(endOfProgram);
 
+		input.close();
+		System.out.println("até a próxima!");
 
 	}
 }

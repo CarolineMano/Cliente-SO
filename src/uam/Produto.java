@@ -39,7 +39,7 @@ public class Produto {
 		return "Status: " + response.statusCode() + " " + response.body();
 	}
 
-	public static String deletarProduto(Long id, String token) throws IOException, InterruptedException {
+	public static String deletarProduto(String id, String token) throws IOException, InterruptedException {
 
 		HttpClient cliente = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
@@ -80,7 +80,7 @@ public class Produto {
 		return "Status: " + response.statusCode() + " " + response.body();
 	}
 
-	public static String alterarProduto(Long id, String nome, String quantidade, String valor, String token) throws IOException, InterruptedException {
+	public static String alterarProduto(String id, String nome, String quantidade, String valor, String token) throws IOException, InterruptedException {
 		
 		var values = new HashMap<String, String>() {{
 			put("nome", nome);
