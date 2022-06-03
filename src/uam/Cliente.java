@@ -12,14 +12,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Cliente {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Cliente.pegarToken();
+		String token;
+		token = Cliente.autenticar("admin@email.com","1234");
+		System.out.println(listarEstoque(token));
+		System.out.println(buscarProduto(1L, token));
+		System.out.println(deletarProduto(1L, token));
+		System.out.println(listarEstoque(token));
+
+
+
 	}
 	
-	public static void pegarToken() throws IOException, InterruptedException {
+	public static String autenticar(String email, String senha) throws IOException, InterruptedException {
 		
 		var values = new HashMap<String, String>() {{
-			put("senha", "1234");
-			put("email", "admin@email.com");
+			put("senha", senha);
+			put("email", email);
 		}};
 		
 		var objectMapper = new ObjectMapper();
@@ -30,13 +38,58 @@ public class Cliente {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("http://localhost:8080/v1/auth"))
 				.header("Content-type", "application/json")
-				.header("Authoriztion", "Bearer " + jtw)
 				.POST(HttpRequest.BodyPublishers.ofString(requestBody))
 				.build();
 		
 		HttpResponse<String> response = cliente.send(request,
                 HttpResponse.BodyHandlers.ofString());
+
+		String jwt = response.body();
+		jwt = jwt.substring(10,jwt.length()-2);
+		System.out.println(jwt);
+		return "Bearer " + jwt;
+	}
+
+	public static String listarEstoque(String token) throws IOException, InterruptedException {
 		
-		System.out.println(response.body());		
+		HttpClient cliente = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:8080/v1/estoque"))
+				.header("Authorization", token)
+				.build();
+		
+		HttpResponse<String> response = cliente.send(request,
+    		HttpResponse.BodyHandlers.ofString());
+
+		return "Status: " + response.statusCode() + " " + response.body();
+	}
+
+	public static String buscarProduto(Long id, String token) throws IOException, InterruptedException {
+
+		HttpClient cliente = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:8080/v1/estoque/" + id))
+				.header("Authorization", token)
+				.build();
+		
+		HttpResponse<String> response = cliente.send(request,
+    		HttpResponse.BodyHandlers.ofString());
+
+		return "Status: " + response.statusCode() + " " + response.body();
+	}
+
+	public static String deletarProduto(Long id, String token) throws IOException, InterruptedException {
+
+		HttpClient cliente = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:8080/v1/estoque/" + id))
+				.header("Authorization", token)
+				.DELETE()
+				.build();
+		
+		HttpResponse<String> response = cliente.send(request,
+    		HttpResponse.BodyHandlers.ofString());
+
+		return "Status: " + response.statusCode();
 	}
 }
