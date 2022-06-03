@@ -25,7 +25,7 @@ public class Produto {
 		return "Status: " + response.statusCode() + " " + response.body();
 	}
 
-	public static String buscarProduto(Long id, String token) throws IOException, InterruptedException {
+	public static String buscarProduto(String id, String token) throws IOException, InterruptedException {
 
 		HttpClient cliente = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
