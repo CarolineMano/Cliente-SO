@@ -96,13 +96,13 @@ public class Cliente {
 					break;
 
 				default:
-					System.out.println("voce náo digitou uma opcao valida! tente novamente!!");
+					System.out.println("Você não digitou uma opção válida! Tente novamente!!");
 					break;
 			}
 		}while(endOfProgram);
 
 		input.close();
-		System.out.println("até a próxima!");
+		System.out.println("Até a próxima!");
 
 	}
 }

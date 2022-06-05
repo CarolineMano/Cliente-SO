@@ -34,7 +34,6 @@ public class Usuario {
 
 		String jwt = response.body();
 		jwt = jwt.substring(10,jwt.length()-2);
-		System.out.println(jwt);
 		return "Bearer " + jwt;
 	}
 
