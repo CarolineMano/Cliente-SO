@@ -43,7 +43,7 @@ public class Cliente {
 					email = input.nextLine();
 					System.out.print("Digite a senha do novo usuario: ");
 					senha = input.nextLine();
-					System.out.print("Digite o id do perfil, sendo 1 - Admin e 2 - Comun: ");
+					System.out.print("Digite o id do perfil, sendo 1 - Admin e 2 - Comum: ");
 					id = Tool.convertStringToInt(input).toString();
 					
 					System.out.println(Usuario.criarUsuario(token, email, senha, id));
